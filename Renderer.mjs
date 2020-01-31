@@ -1,5 +1,5 @@
 import Vao from "./gl/Vao.mjs";
-import ShaderProgram from "./gl/ShaderProgram.mjs";
+import RayMarcherShader from "./RayMarcherShader.mjs";
 
 export default class Snake3002Renderer extends HTMLElement {
 	constructor(){
@@ -25,8 +25,8 @@ export default class Snake3002Renderer extends HTMLElement {
 			this.canvas = this.shadowRoot.querySelector("canvas");
 			this.gl = this.canvas.getContext("webgl2");
 			this._vao = new Vao(this.gl);
-			this._vao.addVbo(0,2,[-0.5,-0.5,-0.5,0.5,0.5,-0.5,0.5,-0.5,-0.5,0.5,0.5,0.5]);//[-1,-1,-1,1,1,-1,1,-1,-1,1,1,1]
-			this._shader = new ShaderProgram(this.gl,await (await fetch("./shader.vert")).text(),await (await fetch("./shader.frag")).text());
+			this._vao.addVbo(0,2,[-1,-1,-1,1,1,-1,1,-1,-1,1,1,1]);
+			this._shader = new RayMarcherShader(this.gl);
 		})();
 	}
 
@@ -40,7 +40,8 @@ export default class Snake3002Renderer extends HTMLElement {
 			this.canvas.style.height = height*this._pixelSize+"px";
 		}
 		this.gl.viewport(0,0,width,height);
-		if (this._shader){
+		if (this._shader.isReady){
+			this._shader.screenRatio = width/height;
 			this._vao.bind();
 			this.gl.drawArrays(this.gl.TRIANGLES,0,6);
 		}
