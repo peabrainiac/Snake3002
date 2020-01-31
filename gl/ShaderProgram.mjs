@@ -43,4 +43,18 @@ export default class ShaderProgram {
 		}
 		this._gl.uniform1f(this._uniformLocations[name],value);
 	}
+
+	loadVector3f(name,vector){
+		if (!this._uniformLocations[name]){
+			this._uniformLocations[name] = this._gl.getUniformLocation(this._id,name);
+		}
+		this._gl.uniform3f(this._uniformLocations[name],vector.x,vector.y,vector.z);
+	}
+
+	loadMatrix3f(name,matrix){
+		if (!this._uniformLocations[name]){
+			this._uniformLocations[name] = this._gl.getUniformLocation(this._id,name);
+		}
+		this._gl.uniformMatrix3fv(this._uniformLocations[name],false,matrix.toArray());
+	}
 }

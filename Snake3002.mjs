@@ -1,4 +1,5 @@
 import "./Renderer.mjs";
+import Snake from "./Snake.mjs";
 
 export default class Snake3002 extends HTMLElement {
 	constructor(){
@@ -17,11 +18,13 @@ export default class Snake3002 extends HTMLElement {
 			<snake-3002-renderer></snake-3002-renderer>
 		`;
 		this.renderer = this.shadowRoot.querySelector("snake-3002-renderer");
+		this.snake = new Snake();
 		this.update();
 	}
 
 	update(){
-		this.renderer.update();
+		this.snake.update();
+		this.renderer.render(this.snake);
 		requestAnimationFrame(()=>{
 			this.update();
 		});
