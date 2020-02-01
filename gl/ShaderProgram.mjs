@@ -1,4 +1,6 @@
 import Shader from "./Shader.mjs";
+import Vector3f from "../math/Vector3f.mjs";
+import Matrix3f from "../math/Matrix3f.mjs";
 
 export default class ShaderProgram {
 	constructor(gl,vertexSource,fragmentSource){
@@ -8,6 +10,14 @@ export default class ShaderProgram {
 		this._id = gl.createProgram();
 		gl.attachShader(this._id,this._vertexShader.id);
 		gl.attachShader(this._id,this._fragmentShader.id);
+		this._uniformLocations = {};
+		this.uniforms = new Proxy({},{set:(target,property,value,receiver)=>{
+			target[property] = value;
+			if (this._isReady){
+				this.load(property,value);
+			}
+			return true;
+		}});
 		this._isReady = false;
 		if (vertexSource&&fragmentSource){
 			this.compile(vertexSource,fragmentSource);
@@ -26,15 +36,24 @@ export default class ShaderProgram {
 		}
 		this._gl.useProgram(this._id);
 		this._uniformLocations = {};
-		this.loadAllUniforms();
+		let uniforms = Object.getOwnPropertyNames(this.uniforms);
+		for (let i=0;i<uniforms.length;i++){
+			this.load(uniforms[i],this.uniforms[uniforms[i]]);
+		}
 	}
 
 	get isReady(){
 		return this._isReady;
 	}
 
-	loadAllUniforms(){
-
+	load(name,value){
+		if (value instanceof Matrix3f){
+			this.loadMatrix3f(name,value);
+		}else if(value instanceof Vector3f){
+			this.loadVector3f(name,value);
+		}else{
+			this.loadFloat(name,value);
+		}
 	}
 
 	loadFloat(name,value){
