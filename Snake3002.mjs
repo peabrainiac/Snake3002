@@ -1,5 +1,5 @@
-import "./Renderer.mjs";
-import Snake from "./Snake.mjs";
+import "./render/Renderer.mjs";
+import Snake from "./logic/Snake.mjs";
 
 export default class Snake3002 extends HTMLElement {
 	constructor(){

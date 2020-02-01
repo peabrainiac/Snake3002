@@ -1,4 +1,4 @@
-import Vao from "./gl/Vao.mjs";
+import Vao from "../gl/Vao.mjs";
 import RayMarcherShader from "./RayMarcherShader.mjs";
 
 export default class Snake3002Renderer extends HTMLElement {

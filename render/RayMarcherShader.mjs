@@ -1,12 +1,12 @@
-import ShaderProgram from "./gl/ShaderProgram.mjs";
-import Vector3f from "./math/Vector3f.mjs";
-import Matrix3f from "./math/Matrix3f.mjs";
+import ShaderProgram from "../gl/ShaderProgram.mjs";
+import Vector3f from "../math/Vector3f.mjs";
+import Matrix3f from "../math/Matrix3f.mjs";
 
 export default class RayMarcherShader extends ShaderProgram {
 	constructor(gl){
 		super(gl);
 		(async()=>{
-			this.compile(await (await fetch("./shader.vert")).text(),await (await fetch("./shader.frag")).text());
+			this.compile(await (await fetch("./render/shader.vert")).text(),await (await fetch("./render/shader.frag")).text());
 		})();
 		this.uniforms.screenRatio = 2;
 		this.uniforms.cameraPosition = new Vector3f();

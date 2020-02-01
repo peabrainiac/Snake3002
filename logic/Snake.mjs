@@ -1,4 +1,4 @@
-import Vector3f from "./math/Vector3f.mjs";
+import Vector3f from "../math/Vector3f.mjs";
 
 export default class Snake {
 	constructor(){
