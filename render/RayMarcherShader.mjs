@@ -46,4 +46,14 @@ export default class RayMarcherShader extends ShaderProgram {
 			this.uniforms.snakeLength = 0;
 		}
 	}
+
+	loadFood(food){
+		if(food){
+			this.uniforms.foodPosition = food.position;
+			this.uniforms.foodRadius = food.radius;
+			this.uniforms.foodRotation = food.rotation;
+		}else{
+			this.uniforms.foodRadius = -1;
+		}
+	}
 }

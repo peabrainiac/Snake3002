@@ -87,7 +87,7 @@ vec4 trace(inout vec3 position, inout vec3 direction){
 		prevDistance = distance;
 		distance = distanceEstimation(p,currentGlowColor);
 		shadeColor += currentGlowColor;
-		totalDistance += distance;
+		totalDistance += distance-0.00001;
 		if (distance<0.001){
 			break;
 		}

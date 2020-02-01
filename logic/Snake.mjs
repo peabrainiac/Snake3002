@@ -10,7 +10,7 @@ export default class Snake {
 		}
 	}
 
-	update(deltaTime=1/60){
+	update(deltaTime){
 		this.cameraPosition.z += deltaTime*0.5;
 		this.sphereRadius += (0.05-this.sphereRadius)*(1-Math.pow(0.333,deltaTime));
 		let minDistance = 2*Math.max(this.sphereRadius,0.01);

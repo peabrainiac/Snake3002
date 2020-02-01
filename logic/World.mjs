@@ -1,4 +1,5 @@
 import Snake from "./Snake.mjs";
+import Food from "./Food.mjs";
 import Vector3f from "../math/Vector3f.mjs";
 
 export default class World {
@@ -9,6 +10,8 @@ export default class World {
 
 	start(){
 		this._snake = new Snake(this._cameraPosition);
+		this.placeFood();
+		this.food.radius = -1;
 	}
 
 	update(){
@@ -19,6 +22,14 @@ export default class World {
 		}else{
 			this._cameraPosition.z += deltaTime*0.5;
 		}
+		if (this._food){
+			this._food.update(deltaTime);
+		}
+	}
+
+	placeFood(){
+		let position = new Vector3f(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5);
+		this._food = new Food(position);
 	}
 
 	get snake(){
@@ -27,5 +38,9 @@ export default class World {
 
 	get cameraPosition(){
 		return this._cameraPosition;
+	}
+
+	get food(){
+		return this._food;
 	}
 }
