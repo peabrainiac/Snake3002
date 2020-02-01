@@ -6,9 +6,11 @@ export default class Food {
 		this.radius = -0.05;
 		this.position = position;
 		this.rotation = new Matrix3f();
+		this.rotation.rotate(0,45,45);
 	}
 
 	update(deltaTime){
 		this.radius += (0.025-this.radius)*(1-Math.pow(0.111,deltaTime))
+		this.rotation.rotate(150*deltaTime,150*deltaTime,0);
 	}
 }
