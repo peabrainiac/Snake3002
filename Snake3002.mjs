@@ -1,5 +1,5 @@
 import "./render/Renderer.mjs";
-import Snake from "./logic/Snake.mjs";
+import World from "./logic/World.mjs";
 
 export default class Snake3002 extends HTMLElement {
 	constructor(){
@@ -18,13 +18,16 @@ export default class Snake3002 extends HTMLElement {
 			<snake-3002-renderer></snake-3002-renderer>
 		`;
 		this.renderer = this.shadowRoot.querySelector("snake-3002-renderer");
-		this.snake = new Snake();
+		this.world = new World();
+		setTimeout(()=>{
+			this.world.start();
+		},3000)
 		this.update();
 	}
 
 	update(){
-		this.snake.update();
-		this.renderer.render(this.snake);
+		this.world.update();
+		this.renderer.render(this.world);
 		requestAnimationFrame(()=>{
 			this.update();
 		});

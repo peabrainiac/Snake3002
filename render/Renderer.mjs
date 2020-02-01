@@ -4,7 +4,7 @@ import RayMarcherShader from "./RayMarcherShader.mjs";
 export default class Snake3002Renderer extends HTMLElement {
 	constructor(){
 		super();
-		this._pixelSize = 2;
+		this._pixelSize = 3;
 		(async ()=>{
 			this.attachShadow({mode:"open"});
 			this.shadowRoot.innerHTML = `
@@ -30,7 +30,7 @@ export default class Snake3002Renderer extends HTMLElement {
 		})();
 	}
 
-	render(snake){
+	render(world){
 		let width = this.offsetWidth/this._pixelSize;
 		let height = this.offsetHeight/this._pixelSize;
 		if (this.canvas.width!=width||this.canvas.height!=height){
@@ -42,7 +42,8 @@ export default class Snake3002Renderer extends HTMLElement {
 		this.gl.viewport(0,0,width,height);
 		if (this._shader.isReady){
 			this._shader.screenRatio = width/height;
-			this._shader.cameraPosition = snake.cameraPosition;
+			this._shader.cameraPosition = world.cameraPosition;
+			this._shader.loadSnake(world.snake);
 			this._vao.bind();
 			this.gl.drawArrays(this.gl.TRIANGLES,0,6);
 		}

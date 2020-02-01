@@ -9,10 +9,11 @@ export default class Vector3f {
 		this.x *= s;
 		this.y *= s;
 		this.z *= s;
+		return this;
 	}
 
 	copy(){
-		return new Vector3f(x,y,z);
+		return new Vector3f(this.x,this.y,this.z);
 	}
 
 	get length(){
@@ -27,5 +28,13 @@ export default class Vector3f {
 		this.x += v.x;
 		this.y += v.y;
 		this.z += v.z;
+		return this;
+	}
+
+	subtract(v){
+		this.x -= v.x;
+		this.y -= v.y;
+		this.z -= v.z;
+		return this;
 	}
 }

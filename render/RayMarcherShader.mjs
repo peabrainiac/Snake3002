@@ -14,8 +14,9 @@ export default class RayMarcherShader extends ShaderProgram {
 		this.uniforms.gridWidth = 0.04;
 
 		this.uniforms.foodRadius = -0.05;
-		this.uniforms.snakeSphereRadius = -0.05;
-		this.uniforms.secondSnakeSphereRadius = -0.05;
+		this.uniforms.snakeSphereRadius = -0.1;
+		this.uniforms.snakeColor = new Vector3f(0.25,1,0);
+		this.uniforms.secondSnakeSphereRadius = -0.1;
 		this.uniforms.reflectivity = 0.5;
 	}
 
@@ -33,5 +34,16 @@ export default class RayMarcherShader extends ShaderProgram {
 
 	set cameraPosition(cameraPosition){
 		this.uniforms.cameraPosition = cameraPosition;
+	}
+
+	loadSnake(snake){
+		if (snake){
+			this.uniforms.snakeSphereRadius = snake.sphereRadius;
+			this.uniforms.snakeLength = snake.spherePositions.length;
+			this.uniforms.snakePositions = snake.spherePositions;
+		}else{
+			this.uniforms.snakeSphereRadius = -0.1;
+			this.uniforms.snakeLength = 0;
+		}
 	}
 }
