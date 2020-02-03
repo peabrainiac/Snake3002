@@ -1,26 +1,27 @@
 import Snake from "./Snake.mjs";
 import Food from "./Food.mjs";
+import Camera from "./Camera.mjs";
 import Vector3f from "../math/Vector3f.mjs";
 
 export default class World {
 	constructor(){
 		this._lastFrame = Date.now();
-		this._cameraPosition = new Vector3f();
+		this._camera = new Camera();
 	}
 
 	start(){
-		this._snake = new Snake(this._cameraPosition);
+		this._snake = new Snake(this._camera);
 		this.placeFood();
 		this.food.radius = -1;
 	}
 
-	update(){
+	update(inputHandler){
 		let deltaTime = (Date.now()-this._lastFrame)/1000;
 		this._lastFrame = Date.now();
 		if (this._snake){
-			this._snake.update(deltaTime);
+			this._snake.update(deltaTime,inputHandler.keys.w,inputHandler.keys.a,inputHandler.keys.s,inputHandler.keys.d);
 		}else{
-			this._cameraPosition.z += deltaTime*0.5;
+			this._camera.update(deltaTime);
 		}
 		if (this._food){
 			this._food.update(deltaTime);
@@ -36,8 +37,8 @@ export default class World {
 		return this._snake;
 	}
 
-	get cameraPosition(){
-		return this._cameraPosition;
+	get camera(){
+		return this._camera;
 	}
 
 	get food(){

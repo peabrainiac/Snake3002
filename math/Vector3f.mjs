@@ -37,4 +37,12 @@ export default class Vector3f {
 		this.z -= v.z;
 		return this;
 	}
+
+	apply(m){
+		let v = this.copy();
+		this.x = v.x*m.m00+v.y*m.m10+v.z*m.m20;
+		this.y = v.x*m.m01+v.y*m.m11+v.z*m.m21;
+		this.z = v.x*m.m02+v.y*m.m12+v.z*m.m22;
+		return this;
+	}
 }

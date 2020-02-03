@@ -10,6 +10,7 @@ export default class RayMarcherShader extends ShaderProgram {
 		})();
 		this.uniforms.screenRatio = 2;
 		this.uniforms.cameraPosition = new Vector3f();
+		this.uniforms.viewDirection = new Matrix3f();
 		this.uniforms.foodRotation = new Matrix3f();
 		this.uniforms.gridWidth = 0.04;
 
@@ -34,6 +35,11 @@ export default class RayMarcherShader extends ShaderProgram {
 
 	set cameraPosition(cameraPosition){
 		this.uniforms.cameraPosition = cameraPosition;
+	}
+
+	loadCamera(camera){
+		this.uniforms.cameraPosition = camera.position;
+		this.uniforms.viewDirection = camera.viewDirection;
 	}
 
 	loadSnake(snake){

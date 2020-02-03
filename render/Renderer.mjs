@@ -42,7 +42,7 @@ export default class Snake3002Renderer extends HTMLElement {
 		this.gl.viewport(0,0,width,height);
 		if (this._shader.isReady){
 			this._shader.screenRatio = width/height;
-			this._shader.cameraPosition = world.cameraPosition;
+			this._shader.loadCamera(world.camera);
 			this._shader.loadSnake(world.snake);
 			this._shader.loadFood(world.food);
 			this._vao.bind();
