@@ -4,7 +4,7 @@ import RayMarcherShader from "./RayMarcherShader.mjs";
 export default class Snake3002Renderer extends HTMLElement {
 	constructor(){
 		super();
-		this._pixelSize = 3;
+		this._pixelSize = 4;
 		(async ()=>{
 			this.attachShadow({mode:"open"});
 			this.shadowRoot.innerHTML = `
