@@ -28,8 +28,9 @@ export default class Snake3002 extends HTMLElement {
 		this.world = new World();
 		this.mainMenu = this.shadowRoot.querySelector("snake-3002-main-menu");
 		this.mainMenu.onGameStart(()=>{
-			this.world.start();
 			this.mainMenu.hide();
+			this.inputHandler.requestPointerLock();
+			this.world.start();
 		},3000);
 		this.renderer.addEventListener("click",()=>{
 			this.inputHandler.requestPointerLock();

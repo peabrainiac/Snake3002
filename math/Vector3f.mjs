@@ -24,17 +24,42 @@ export default class Vector3f {
 		this.scale(l/this.length);
 	}
 
-	add(v){
-		this.x += v.x;
-		this.y += v.y;
-		this.z += v.z;
+	add(v,y=v,z=v){
+		if (v instanceof Vector3f){
+			this.x += v.x;
+			this.y += v.y;
+			this.z += v.z;
+		}else{
+			this.x += v;
+			this.y += y;
+			this.z += z;
+		}
 		return this;
 	}
 
-	subtract(v){
-		this.x -= v.x;
-		this.y -= v.y;
-		this.z -= v.z;
+	subtract(v,y=v,z=v){
+		if (v instanceof Vector3f){
+			this.x -= v.x;
+			this.y -= v.y;
+			this.z -= v.z;
+		}else{
+			this.x -= v;
+			this.y -= y;
+			this.z -= z;
+		}
+		return this;
+	}
+
+	mod(v,y=v,z=v){
+		if (v instanceof Vector3f){
+			this.x = (this.x%v.x+v.x)%v.x;
+			this.y = (this.y%v.y+v.y)%v.y;
+			this.z = (this.z%v.z+v.z)%v.z;
+		}else{
+			this.x = (this.x%v+v)%v;
+			this.y = (this.y%y+y)%y;
+			this.z = (this.z%z+z)%z;
+		}
 		return this;
 	}
 
