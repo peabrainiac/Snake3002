@@ -37,7 +37,17 @@ export default class World {
 	}
 
 	placeFood(){
-		let position = new Vector3f(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5);
+		let position;
+		let validPosition = false;
+		while(!validPosition){
+			position = new Vector3f(Math.random()-0.5,Math.random()-0.5,Math.random()-0.5);
+			validPosition = (this.gridDistance(position)>0.1);
+			for (let i=0;i<this._snake.length;i++){
+				if (this.distance(position,this._snake.spherePositions[i])<0.1){
+					validPosition = false;
+				}
+			}
+		}
 		this._food = new Food(position);
 	}
 
