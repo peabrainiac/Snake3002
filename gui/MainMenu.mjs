@@ -6,10 +6,6 @@ export default class MainMenu extends HTMLElement {
 			<style>
 				:host {
 					display: block;
-					background: #00000040;
-				}
-				:host.hidden {
-
 				}
 				#buttons-container {
 					position: absolute;
@@ -17,38 +13,16 @@ export default class MainMenu extends HTMLElement {
 					top: 50%;
 					transform: translate(-50%,-50%);
 				}
-				.button {
-					display: block;
-					position: relative;
-					box-sizing: border-box;
-					width: 200px;
-					height: 70px;
-					background: #00000040;
-					border: 4px solid #ffffff60;
-					color: #ffffff;
-					font-size: 30px;
-					margin: 10px;
-				}
-				.button::after {
-					content: "";
-					position: absolute;
-					left: -4px;
-					top: -4px;
-					right: -4px;
-					bottom: -4px;
-					pointer-events: none;
-					background: transparent;
-				}
-				.button:hover::after {
-					background: #ffaf0040;
-				}
 			</style>
 			<div id="buttons-container">
-				<button id="start-button" class="button">Start</button>
-				<button id="settings-button" class="button">Settings</button>
+				<slot></slot>
 			</div>
 		`;
-		this._startButton = this.shadowRoot.querySelector("#start-button");
+		this.innerHTML = `
+			<button id="start-button" class="button">Start</button>
+			<button id="settings-button" class="button">Settings</button>
+		`;
+		this._startButton = this.querySelector("#start-button");
 	}
 
 	hide(){

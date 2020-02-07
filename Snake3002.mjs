@@ -1,7 +1,7 @@
 import "./render/Renderer.mjs";
 import World from "./logic/World.mjs";
 import InputHandler from "./gui/InputHandler.mjs";
-import MainMenu from "./gui/MainMenu.mjs";
+import "./gui/Gui.mjs";
 
 export default class Snake3002 extends HTMLElement {
 	constructor(){
@@ -12,7 +12,7 @@ export default class Snake3002 extends HTMLElement {
 				:host {
 					display: block;
 				}
-				snake-3002-renderer, snake-3002-main-menu {
+				snake-3002-renderer, snake-3002-gui {
 					position: absolute;
 					left: 0;
 					top: 0;
@@ -21,14 +21,14 @@ export default class Snake3002 extends HTMLElement {
 				}
 			</style>
 			<snake-3002-renderer></snake-3002-renderer>
-			<snake-3002-main-menu></snake-3002-main-menu>
+			<snake-3002-gui></snake-3002-gui>
 		`;
 		this.renderer = this.shadowRoot.querySelector("snake-3002-renderer");
 		this.inputHandler = new InputHandler(this.renderer.canvas);
 		this.world = new World();
-		this.mainMenu = this.shadowRoot.querySelector("snake-3002-main-menu");
-		this.mainMenu.onGameStart(()=>{
-			this.mainMenu.hide();
+		this.gui = this.shadowRoot.querySelector("snake-3002-gui");
+		this.gui.mainMenu.onGameStart(()=>{
+			this.gui.mainMenu.hide();
 			this.inputHandler.requestPointerLock();
 			this.world.start();
 		},3000);
