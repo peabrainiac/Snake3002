@@ -29,6 +29,7 @@ export default class InputHandler {
 			}else{
 				this._hasPointerLock = false;
 				this.keys = {};
+				this._onExitPointerLock();
 			}
 		});
 		this.target.addEventListener("mousedown",(e)=>{
@@ -47,5 +48,9 @@ export default class InputHandler {
 
 	exitPointerLock(){
 		document.exitPointerLock();
+	}
+
+	onExitPointerLock(callback){
+		this._onExitPointerLock = callback;
 	}
 }

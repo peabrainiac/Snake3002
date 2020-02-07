@@ -1,4 +1,5 @@
 import "./MainMenu.mjs";
+import PauseMenu from "./PauseMenu.mjs";
 
 export default class Snake3002Gui extends HTMLElement {
 	constructor(){
@@ -43,6 +44,38 @@ export default class Snake3002Gui extends HTMLElement {
 			<snake-3002-main-menu class="menu"></snake-3002-main-menu>
 		`;
 		this.mainMenu = this.shadowRoot.querySelector("snake-3002-main-menu");
+		this.mainMenu.onGameStart(()=>{
+			this.mainMenu.hide();
+			this._onGameStart();
+		});
+		this.pauseMenu = new PauseMenu();
+		this.pauseMenu.className = "menu";
+		this.pauseMenu.onContinue(()=>{
+			this.pauseMenu.hide();
+			this._onGameContinue();
+		});
+		this.pauseMenu.onExit(()=>{
+			this.pauseMenu.hide();
+			this._onGameReset();
+			this.mainMenu.show();
+		});
 	}
+
+	onGameStart(callback){
+		this._onGameStart = callback;
+	}
+
+	onGameContinue(callback){
+		this._onGameContinue = callback;
+	}
+
+	onGameReset(callback){
+		this._onGameReset = callback;
+	}
+
+	openPauseMenu(){
+		this.pauseMenu.show(this.shadowRoot);
+	}
+
 }
 window.customElements.define("snake-3002-gui",Snake3002Gui);

@@ -27,13 +27,20 @@ export default class Snake3002 extends HTMLElement {
 		this.inputHandler = new InputHandler(this.renderer.canvas);
 		this.world = new World();
 		this.gui = this.shadowRoot.querySelector("snake-3002-gui");
-		this.gui.mainMenu.onGameStart(()=>{
-			this.gui.mainMenu.hide();
+		this.gui.onGameStart(()=>{
 			this.inputHandler.requestPointerLock();
 			this.world.start();
 		},3000);
-		this.renderer.addEventListener("click",()=>{
+		this.inputHandler.onExitPointerLock(()=>{
+			this.world.pause();
+			this.gui.openPauseMenu();
+		});
+		this.gui.onGameContinue(()=>{
 			this.inputHandler.requestPointerLock();
+			this.world.unpause();
+		});
+		this.gui.onGameReset(()=>{
+			this.world = new World();
 		});
 		this.update();
 	}

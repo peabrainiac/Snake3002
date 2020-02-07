@@ -8,6 +8,8 @@ export default class World {
 		this._lastFrame = Date.now();
 		this._camera = new Camera();
 		this._gridWidth = 0.04;
+		this._targetGameSpeed = 1;
+		this._currentGameSpeed = 10;
 	}
 
 	start(){
@@ -19,6 +21,10 @@ export default class World {
 	update(inputHandler){
 		let deltaTime = (Date.now()-this._lastFrame)/1000;
 		this._lastFrame = Date.now();
+
+		this._currentGameSpeed += (this._targetGameSpeed-this._currentGameSpeed)*(1-Math.pow(0.125,deltaTime));
+		deltaTime *= this._currentGameSpeed;
+
 		if (this._food){
 			this._food.update(deltaTime);
 		}
@@ -34,6 +40,14 @@ export default class World {
 		}else{
 			this._camera.update(deltaTime);
 		}
+	}
+
+	pause(){
+		this._targetGameSpeed = 0;
+	}
+
+	unpause(){
+		this._targetGameSpeed = 1;
 	}
 
 	placeFood(){
