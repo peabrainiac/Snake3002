@@ -1,4 +1,4 @@
-export default class MainMenu extends HTMLElement {
+export default class DeathMenu extends HTMLElement {
 	constructor(){
 		super();
 		this.attachShadow({mode:"open"});
@@ -19,10 +19,12 @@ export default class MainMenu extends HTMLElement {
 			</div>
 		`;
 		this.innerHTML = `
-			<button id="start-button" class="button">Start</button>
+			<button id="retry-button" class="button">Retry</button>
 			<button id="settings-button" class="button">Settings</button>
+			<button id="exit-button" class="button">Exit</button>
 		`;
-		this._startButton = this.querySelector("#start-button");
+		this._retryButton = this.querySelector("#retry-button");
+		this._exitButton = this.querySelector("#exit-button");
 	}
 
 	hide(){
@@ -33,8 +35,13 @@ export default class MainMenu extends HTMLElement {
 		parent.appendChild(this);
 	}
 
-	onGameStart(callback){
-		this._startButton.addEventListener("click",callback);
+	onRetry(callback){
+		this._retryButton.addEventListener("click",callback);
 	}
+
+	onExit(callback){
+		this._exitButton.addEventListener("click",callback);
+	}
+
 }
-window.customElements.define("snake-3002-main-menu",MainMenu)
+window.customElements.define("snake-3002-death-menu",DeathMenu);

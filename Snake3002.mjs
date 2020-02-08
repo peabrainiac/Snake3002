@@ -33,14 +33,20 @@ export default class Snake3002 extends HTMLElement {
 		},3000);
 		this.inputHandler.onExitPointerLock(()=>{
 			this.world.pause();
-			this.gui.openPauseMenu();
+			if (!this.gui.isAnyMenuOpen()){
+				this.gui.openPauseMenu();
+			}
 		});
 		this.gui.onGameContinue(()=>{
 			this.inputHandler.requestPointerLock();
 			this.world.unpause();
 		});
 		this.gui.onGameReset(()=>{
-			this.world = new World();
+			this.world.reset();
+		});
+		this.world.onGameEnd(()=>{
+			this.inputHandler.exitPointerLock();
+			this.gui.openDeathMenu();
 		});
 		this.update();
 	}

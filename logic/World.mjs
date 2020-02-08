@@ -9,7 +9,17 @@ export default class World {
 		this._camera = new Camera();
 		this._gridWidth = 0.04;
 		this._targetGameSpeed = 1;
-		this._currentGameSpeed = 10;
+		this._currentGameSpeed = 1;
+		this._hasGameEnded = false;
+	}
+
+	reset(){
+		this._camera = new Camera();
+		this._hasGameEnded = false;
+		this._targetGameSpeed = 1;
+		this._currentGameSpeed = 1;
+		this._snake = undefined;
+		this._food = undefined;
 	}
 
 	start(){
@@ -40,6 +50,10 @@ export default class World {
 		}else{
 			this._camera.update(deltaTime);
 		}
+		if (this._snake&&!this._snake.isAlive&&!this._hasGameEnded){
+			this._hasGameEnded = true;
+			this._onGameEnd();
+		}
 	}
 
 	pause(){
@@ -48,6 +62,10 @@ export default class World {
 
 	unpause(){
 		this._targetGameSpeed = 1;
+	}
+
+	onGameEnd(callback){
+		this._onGameEnd = callback;
 	}
 
 	placeFood(){
