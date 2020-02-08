@@ -1,4 +1,4 @@
-import Vector3f from "./Camera.mjs";
+import Camera from "./Camera.mjs";
 
 export default class Snake {
 	constructor(camera=new Camera()){
