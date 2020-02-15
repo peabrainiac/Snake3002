@@ -30,10 +30,11 @@ export default class Snake3002Renderer extends HTMLElement {
 		})();
 	}
 
-	render(world){
-		let width = this.offsetWidth/this._pixelSize;
-		let height = this.offsetHeight/this._pixelSize;
+	render(world,w=this.offsetWidth/this._pixelSize,h=this.offsetHeight/this._pixelSize){
+		let width = Math.round(w);
+		let height = Math.round(h);
 		if (this.canvas.width!=width||this.canvas.height!=height){
+			console.log("changing canvas size!");
 			this.canvas.width = width;
 			this.canvas.height = height;
 			this.canvas.style.width = width*this._pixelSize+"px";
@@ -46,8 +47,33 @@ export default class Snake3002Renderer extends HTMLElement {
 			this._shader.loadSnake(world.snake);
 			this._shader.loadFood(world.food);
 			this._vao.bind();
-			this.gl.drawArrays(this.gl.TRIANGLES,0,6);
+			if (width*height<1000*1000){
+				this.gl.drawArrays(this.gl.TRIANGLES,0,6);
+			}else{
+				let n = Math.ceil(Math.sqrt(width*height)/250);
+				console.log("Splitting rendering in chunks: "+n+"x"+n);
+				for (let x=0;x<n;x++){
+					for (let y=0;y<n;y++){
+						let vao = new Vao(this.gl);
+						let x1 = 2*x/n-1;
+						let y1 = 2*y/n-1;
+						let x2 = 2*(x+1)/n-1;
+						let y2 = 2*(y+1)/n-1;
+						vao.addVbo(0,2,[x1,y1,x1,y2,x2,y1,x2,y1,x1,y2,x2,y2]);
+						vao.bind();
+						this.gl.drawArrays(this.gl.TRIANGLES,0,6);
+						vao.destroy();
+					}
+				}
+			}
 		}
+	}
+
+	async screenshot(world,w=this.offsetWidth,h=this.offsetHeight){
+		this.render(world,w,h);
+		return new Promise((resolve,reject)=>{
+			this.canvas.toBlob(resolve);
+		});
 	}
 
 	get pixelSize(){

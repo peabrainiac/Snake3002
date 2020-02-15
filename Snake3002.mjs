@@ -48,6 +48,12 @@ export default class Snake3002 extends HTMLElement {
 			this.inputHandler.exitPointerLock();
 			this.gui.openDeathMenu();
 		});
+		this.gui.onScreenshot(()=>{
+			this.renderer.screenshot(this.world,9600,5040).then((blob)=>{
+				let url = URL.createObjectURL(blob);
+				console.log(url);
+			});
+		});
 		this.update();
 	}
 

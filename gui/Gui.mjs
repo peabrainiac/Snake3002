@@ -20,8 +20,8 @@ export default class Snake3002Gui extends HTMLElement {
 					display: block;
 					position: relative;
 					box-sizing: border-box;
-					width: 200px;
-					height: 70px;
+					min-width: 200px;
+					min-height: 70px;
 					background: #00000040;
 					border: 4px solid #ffffff60;
 					color: #ffffff;
@@ -72,6 +72,10 @@ export default class Snake3002Gui extends HTMLElement {
 			this._onGameReset();
 			this.mainMenu.show(this.shadowRoot);
 		});
+
+		this.pauseMenu.onScreenshot(()=>{
+			this._onScreenshot();
+		});
 	}
 
 	onGameStart(callback){
@@ -84,6 +88,10 @@ export default class Snake3002Gui extends HTMLElement {
 
 	onGameReset(callback){
 		this._onGameReset = callback;
+	}
+
+	onScreenshot(callback){
+		this._onScreenshot = callback;
 	}
 
 	openPauseMenu(){
