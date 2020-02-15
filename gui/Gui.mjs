@@ -1,6 +1,7 @@
 import "./MainMenu.mjs";
 import PauseMenu from "./PauseMenu.mjs";
 import DeathMenu from "./DeathMenu.mjs";
+import SettingsMenu from "./SettingsMenu.mjs";
 
 export default class Snake3002Gui extends HTMLElement {
 	constructor(){
@@ -16,6 +17,10 @@ export default class Snake3002Gui extends HTMLElement {
 					height: 100%;
 					background: #00000040;
 				}
+				.container, .button {
+					background: #00000080;
+					border: 4px solid #ffffff60;
+				}
 				.button {
 					display: block;
 					position: relative;
@@ -23,7 +28,6 @@ export default class Snake3002Gui extends HTMLElement {
 					min-width: 200px;
 					min-height: 70px;
 					background: #00000040;
-					border: 4px solid #ffffff60;
 					color: #ffffff;
 					font-size: 30px;
 					margin: 10px;
@@ -49,11 +53,17 @@ export default class Snake3002Gui extends HTMLElement {
 			this.mainMenu.hide();
 			this._onGameStart();
 		});
+		this.mainMenu.onOpenSettings(()=>{
+			this.settingsMenu.show(this.shadowRoot);
+		});
 		this.pauseMenu = new PauseMenu();
 		this.pauseMenu.className = "menu";
 		this.pauseMenu.onContinue(()=>{
 			this.pauseMenu.hide();
 			this._onGameContinue();
+		});
+		this.pauseMenu.onOpenSettings(()=>{
+			this.settingsMenu.show(this.shadowRoot);
 		});
 		this.pauseMenu.onExit(()=>{
 			this.pauseMenu.hide();
@@ -67,10 +77,18 @@ export default class Snake3002Gui extends HTMLElement {
 			this._onGameReset();
 			this._onGameStart();
 		});
+		this.deathMenu.onOpenSettings(()=>{
+			this.settingsMenu.show(this.shadowRoot);
+		});
 		this.deathMenu.onExit(()=>{
 			this.deathMenu.hide();
 			this._onGameReset();
 			this.mainMenu.show(this.shadowRoot);
+		});
+		this.settingsMenu = new SettingsMenu();
+		this.settingsMenu.className = "menu";
+		this.settingsMenu.onClose(()=>{
+			this.settingsMenu.hide();
 		});
 
 		this.pauseMenu.onScreenshot(()=>{

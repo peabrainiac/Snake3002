@@ -24,6 +24,7 @@ export default class DeathMenu extends HTMLElement {
 			<button id="exit-button" class="button">Exit</button>
 		`;
 		this._retryButton = this.querySelector("#retry-button");
+		this._settingsButton = this.querySelector("#settings-button");
 		this._exitButton = this.querySelector("#exit-button");
 	}
 
@@ -37,6 +38,10 @@ export default class DeathMenu extends HTMLElement {
 
 	onRetry(callback){
 		this._retryButton.addEventListener("click",callback);
+	}
+
+	onOpenSettings(callback){
+		this._settingsButton.addEventListener("click",callback);
 	}
 
 	onExit(callback){

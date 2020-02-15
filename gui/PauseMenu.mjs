@@ -36,6 +36,7 @@ export default class PauseMenu extends HTMLElement {
 			<button id="screenshot-button" class="button" slot="screenshot-button">Screenshot (P)</button>
 		`;
 		this._continueButton = this.querySelector("#continue-button");
+		this._settingsButton = this.querySelector("#settings-button");
 		this._exitButton = this.querySelector("#exit-button");
 		this._screenshotButton = this.querySelector("#screenshot-button");
 	}
@@ -50,6 +51,10 @@ export default class PauseMenu extends HTMLElement {
 
 	onContinue(callback){
 		this._continueButton.addEventListener("click",callback);
+	}
+
+	onOpenSettings(callback){
+		this._settingsButton.addEventListener("click",callback);
 	}
 
 	onExit(callback){

@@ -23,6 +23,7 @@ export default class MainMenu extends HTMLElement {
 			<button id="settings-button" class="button">Settings</button>
 		`;
 		this._startButton = this.querySelector("#start-button");
+		this._settingsButton = this.querySelector("#settings-button");
 	}
 
 	hide(){
@@ -35,6 +36,10 @@ export default class MainMenu extends HTMLElement {
 
 	onGameStart(callback){
 		this._startButton.addEventListener("click",callback);
+	}
+
+	onOpenSettings(callback){
+		this._settingsButton.addEventListener("click",callback);
 	}
 }
 window.customElements.define("snake-3002-main-menu",MainMenu)
