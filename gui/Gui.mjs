@@ -22,7 +22,9 @@ export default class Snake3002Gui extends HTMLElement {
 					border: 4px solid #ffffff60;
 				}
 				.button {
-					display: block;
+					display: flex;
+					justify-content: center;
+					align-items: center;
 					position: relative;
 					box-sizing: border-box;
 					min-width: 200px;
@@ -42,8 +44,11 @@ export default class Snake3002Gui extends HTMLElement {
 					pointer-events: none;
 					background: transparent;
 				}
-				.button:hover::after {
+				.button:hover::after, .button.enabled:hover::after {
 					background: #ffaf0040;
+				}
+				.button.enabled::after {
+					background: #ffffff20;
 				}
 			</style>
 			<snake-3002-main-menu class="menu"></snake-3002-main-menu>
@@ -110,6 +115,10 @@ export default class Snake3002Gui extends HTMLElement {
 
 	onScreenshot(callback){
 		this._onScreenshot = callback;
+	}
+
+	onChangeSettings(callback){
+		this.settingsMenu.onChange(callback);
 	}
 
 	openPauseMenu(){

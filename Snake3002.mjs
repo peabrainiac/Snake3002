@@ -54,6 +54,10 @@ export default class Snake3002 extends HTMLElement {
 				console.log(url);
 			});
 		});
+		this.gui.onChangeSettings((settings)=>{
+			this.renderer.caveEffect = settings.caveEffect;
+			this.renderer.acidEffect = settings.acidEffect;
+		});
 		this.update();
 	}
 

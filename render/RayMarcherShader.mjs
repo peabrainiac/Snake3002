@@ -37,6 +37,22 @@ export default class RayMarcherShader extends ShaderProgram {
 		this.uniforms.cameraPosition = cameraPosition;
 	}
 
+	get caveEffect(){
+		return this.flags["EFFECT_CAVE"];
+	}
+
+	set caveEffect(value){
+		this.flags["EFFECT_CAVE"] = value;
+	}
+
+	get acidEffect(){
+		return this.flags["EFFECT_ACID"];
+	}
+
+	set acidEffect(value){
+		this.flags["EFFECT_ACID"] = value;
+	}
+	
 	loadCamera(camera){
 		this.uniforms.cameraPosition = camera.position;
 		this.uniforms.viewDirection = camera.viewDirection;

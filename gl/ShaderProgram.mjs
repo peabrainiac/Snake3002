@@ -5,6 +5,8 @@ import Matrix3f from "../math/Matrix3f.mjs";
 export default class ShaderProgram {
 	constructor(gl,vertexSource,fragmentSource){
 		this._gl = gl;
+		this._vertexSource = vertexSource;
+		this._fragmentSource = fragmentSource;
 		this._vertexShader = new Shader(gl,gl.VERTEX_SHADER);
 		this._fragmentShader = new Shader(gl,gl.FRAGMENT_SHADER);
 		this._id = gl.createProgram();
@@ -19,6 +21,15 @@ export default class ShaderProgram {
 			}
 			return true;
 		}});
+		this.flags = new Proxy({},{set:(target,property,value,receiver)=>{
+			if (target[property]!=value){
+				target[property] = value;
+				if (this._isReady){
+					this.compile(this._vertexSource,this._fragmentSource);
+				}
+			}
+			return true;
+		}});
 		this._isReady = false;
 		if (vertexSource&&fragmentSource){
 			this.compile(vertexSource,fragmentSource);
@@ -26,8 +37,15 @@ export default class ShaderProgram {
 	}
 
 	compile(vertexSource,fragmentSource){
-		this._vertexShader.compile(vertexSource);
-		this._fragmentShader.compile(fragmentSource);
+		this._vertexSource = vertexSource;
+		this._fragmentSource = fragmentSource;
+		console.log("Compiling!");
+		let flags = Object.getOwnPropertyNames(this.flags).filter((flag)=>(this.flags[flag]));
+		console.log("Active flags:",flags);
+		let flagString = (flags.length?"\n#define "+flags.join("\n#define "):"")+"\n";
+		console.log("Flagstring:",flagString);
+		this._vertexShader.compile(vertexSource.replace("\n",flagString));
+		this._fragmentShader.compile(fragmentSource.replace("\n",flagString));
 		this._gl.linkProgram(this._id);
 		if (!this._gl.getProgramParameter(this._id,this._gl.LINK_STATUS)){
 			this._isReady = false;

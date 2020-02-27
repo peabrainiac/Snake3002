@@ -84,6 +84,22 @@ export default class Snake3002Renderer extends HTMLElement {
 		this._pixelSize = pixelSize;
 	}
 
+	get caveEffect(){
+		return this._shader.caveEffect;
+	}
+
+	set caveEffect(caveEffect){
+		this._shader.caveEffect = caveEffect;
+	}
+
+	get acidEffect(){
+		return this._shader.acidEffect;
+	}
+
+	set acidEffect(acidEffect){
+		this._shader.acidEffect = acidEffect;
+	}
+
 	destroy(){
 		this._vao.destroy();
 	}

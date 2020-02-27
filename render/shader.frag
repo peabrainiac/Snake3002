@@ -104,8 +104,8 @@ vec4 trace(inout vec3 position, inout vec3 direction){
 			smoothSteps = float(steps)-(0.001-distance)/(prevDistance-distance);
 		}
 	#else
-		float shade = 0;
-		float smoothSteps = steps;
+		float shade = 0.0;
+		float smoothSteps = float(steps);
 	#endif
 	shadeColor -= currentGlowColor*(float(steps)-smoothSteps);
 	shadeColor /= smoothSteps;
